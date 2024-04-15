@@ -1,0 +1,21 @@
+/* Guidelines_hu.css */
+
+.body-hu {
+ 
+    
+    padding: 50px;
+    
+   
+  }
+  
+  
+  textarea {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+    padding: 10px;
+    resize: vertical;
+  }
+  
+  /* Add any additional styles as needed */
+  

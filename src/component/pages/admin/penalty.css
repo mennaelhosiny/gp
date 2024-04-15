@@ -1,0 +1,10 @@
+/* في ملف CSS أو مكون ستايل أخرى */
+
+.delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,87 @@
+/* src/ChatBot.css */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#chat-container {
+    width: 100%;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    margin: 8px;
+}
+
+#chat-container .user .message-content {
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    margin-left: auto;
+}
+
+#chat-container .bot .message-content {
+    background-color: #2196f3;
+    color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+    margin-right: auto;
+}
+
+#user-input {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* إضافة أنيميشن للرسائل */
+#chat-container .message-content {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
