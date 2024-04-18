@@ -8,7 +8,9 @@ import logoImage from "../../../images/logo 3 copy.png"
 
 export default function Home() {
 
-
+  const handleLogout = () => {
+    localStorage.removeItem('tkn');
+  };
   const setToken =useContext(authContext)
 
    let user={
@@ -135,8 +137,7 @@ setisLouding(false)
       
   
       </button>
-      <Link to='/appointment' className=' black mt-2 d-flex justify-content-end '>تقدم الطلاب للمدن الجامعيه</Link>
-      <Link to='/editjoinrequest' className=' black mt-2 d-flex justify-content-end '> تعديل طلب الالتحاق  </Link>
+      <Link to='/appointment' onClick={handleLogout} className=' black mt-2 d-flex justify-content-end '>تقدم الطلاب للمدن الجامعيه</Link>
 
     </form>
     </div>

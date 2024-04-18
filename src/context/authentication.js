@@ -9,10 +9,10 @@ export function AuthProvider({children}){
     setToken(localStorage.getItem("tkn"))
  }
  },[])
+ 
+ return <authContext.Provider value={{token,setToken}}>
+   {children}
+ </authContext.Provider>
 
-return<authContext.Provider value={{token,setToken}}>
 
-{children} 
-
-</authContext.Provider>
 }

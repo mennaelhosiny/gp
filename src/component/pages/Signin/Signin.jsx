@@ -1,24 +1,30 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
-import React, { useContext, useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FallingLines } from 'react-loader-spinner'
-import { authContext } from '../../../context/authentication'
 import logoImage from "../../../images/logo 3 copy.png"
 
 
-export default function Home() {
+export default function Signin() {
+  const[token,setToken] = useState(null)
+  useEffect(function(){
+  if(localStorage.getItem("tkn")!==null){
+     setToken(localStorage.getItem("tkn"))
+  }
+  },[])
 
+  const[role,setRole] = useState(null)
+   useEffect(function(){
+    if(localStorage.getItem("role")!==null){
+      setRole(localStorage.getItem("role"))
+    }
+    },[]) 
 
-  const setToken =useContext(authContext)
-
-   let user={
-  
-    nationalId:"",
-    password:"",
-  
-
-   }
+        let user={
+        nationalId:"",
+        password:"",
+      }
 
    const [errMsg,setErrMsg] =useState(null)
    const [successMsg,setSuccessMsg] =useState(null)
@@ -29,17 +35,18 @@ export default function Home() {
 
    async function LoginToAccount(value){
     setisLouding(true)
-
-
+    console.log("sending to backend")
 try{
     const {data}=  await axios.post("http://localhost:5000/api/login",{
       national_id:value.nationalId,
       password:value.password
   })
       console.log(data)
-      if (data.message==="success"){
+      if (data.message==="Successful login"){
         localStorage.setItem('tkn',data.token)
+        localStorage.setItem('role',data.user.role)
         setToken(data.token)
+        setRole(data.user.role)
         setSuccessMsg("Welcome back")
         setTimeout(function(){
           navigate('/EditJoinRequest')
@@ -47,8 +54,8 @@ try{
       }
 }
 catch(err){
-  console.log("error occur",err.response.data.message)
-  setErrMsg(err.response.data.message)
+  console.log("error occur",err.message)
+  setErrMsg(err.message)
 }
 const[formData,setFormData]=useState({
   nationalId:'',

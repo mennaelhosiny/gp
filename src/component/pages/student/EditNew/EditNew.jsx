@@ -1,4 +1,4 @@
-import React, { useState,Fragment } from 'react'
+import React, {useEffect, useState,Fragment } from 'react'
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
 import { useFormik } from 'formik'
@@ -13,6 +13,12 @@ import {
 import { FallingLines } from 'react-loader-spinner';
 import { event } from 'jquery';
 export default function New() {
+  const[token,setToken] = useState(null)
+  useEffect(function(){
+  if(localStorage.getItem("tkn")!==null){
+     setToken(localStorage.getItem("tkn"))
+  }
+  },[])
 
 let user={
   name:"",
@@ -28,36 +34,42 @@ let user={
   const [successMsg,setSuccessMsg] =useState(null)
   const [isLouding,setisLouding] =useState(false)
 
-  async function joinRequest(value){
+  async function joinRequest(value,id){
+    
     setisLouding(true)
     console.log("sending to backend")
 
 
-
-try{
-    const {data}=  await axios.put("http://localhost:5000/api/student/edit",formData,{params:{
-      national_id:value.national_id,
-      password:value.national_id,
-      name:value.name,
-      gender:value.gender
-    }},{
-    
-     
+    try {
+      const { data } = await axios.put(
+        `http://localhost:5000/api/student/edit`,
+        formData,
+        {
+          params: {
+            national_id: value.national_id,
+            password: value.password,
+            name: value.name,
+            gender: value.gender
+          },
+          headers: {
+            Authorization: token // Include authentication token directly
+          }
+        }
+      );
+      console.log("hi", data);
+      if (data.message === "تم بنجاح") {
+        setSuccessMsg("تم ارسال طلب الالتحاق بنجاح");
+        setTimeout(function () {
+          Navigate('/Login');
+        }, 1000);
+      }   
+    } catch(err) {
+      console.log("خطأ في العملية", err);
+      setErrMsg(err.response);
     }
-
-    )
-      console.log("hi",data)
-      if (data.message==="تم بنجاح"){
-        setSuccessMsg("تم ارسال طلب الالتحاق بنجاح")
-        setTimeout(function(){
-          Navigate('/Login')
-        },1000)
-      }
-}
-catch(err){
-  console.log("خطأ في العمليه",err)
-   setErrMsg(err.response)
-}
+    
+   
+    
 
 
 setisLouding(false)
