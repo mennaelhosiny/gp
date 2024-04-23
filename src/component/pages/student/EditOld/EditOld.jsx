@@ -1,4 +1,4 @@
-import React, { useState,Fragment } from 'react'
+import React, {useEffect, useState,Fragment } from 'react'
 import axios from 'axios'
 import { Navigate } from 'react-router-dom'
 import { useFormik } from 'formik'
@@ -10,9 +10,14 @@ import {
   gpa,
   egyptUniversities,
 } from "../../../Data";
-import { FallingLines } from 'react-loader-spinner';
-import { event } from 'jquery';
+
 export default function New() {
+  const[token,setToken] = useState(null)
+  useEffect(function(){
+ if(localStorage.getItem("tkn")!==null){
+    setToken(localStorage.getItem("tkn"))
+ }
+ },[])
 
 let user={
   name:"",
@@ -35,10 +40,20 @@ let user={
 
 
 try{
-    const {data}=  await axios.put("http://localhost:5000/api/student/edit",formData,{
+    const {data}=  await axios.put("http://localhost:5000/api/student/edit",formData,{  
+      params: {
+        national_id: value.national_id,
+        password: value.password,
+        name: value.name,
+        gender: value.gender
+      },
+      headers: {
+        token: token 
+      }
+    }
    
      
-    }
+    
 
     )
       console.log("hi",data)

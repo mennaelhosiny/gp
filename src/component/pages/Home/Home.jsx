@@ -1,17 +1,28 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
-import React, { useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FallingLines } from 'react-loader-spinner'
-import { authContext } from '../../../context/authentication'
 import logoImage from "../../../images/logo 3 copy.png"
 
 export default function Home() {
+  const[token,setToken] = useState(null)
+  useEffect(function(){
+  if(localStorage.getItem("tkn")!==null){
+     setToken(localStorage.getItem("tkn"))
+  }
+  },[])
+
+  const[role,setRole] = useState(null)
+   useEffect(function(){
+    if(localStorage.getItem("role")!==null){
+      setRole(localStorage.getItem("role"))
+    }
+    },[]) 
 
   const handleLogout = () => {
     localStorage.removeItem('tkn');
   };
-  const setToken =useContext(authContext)
 
    let user={
   
@@ -38,21 +49,26 @@ export default function Home() {
   //  })
   //  console.log(data)
 
-try{
-    const {data}=  await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",value)
+  try{
+    const {data}=  await axios.post("http://localhost:5000/api/login",{
+      national_id:value.nationalId,
+      password:value.password
+  })
       console.log(data)
-      if (data.message==="success"){
+      if (data.message==="Successful login"){
         localStorage.setItem('tkn',data.token)
+        localStorage.setItem('role',data.user.role)
         setToken(data.token)
+        setRole(data.user.role)
         setSuccessMsg("Welcome back")
         setTimeout(function(){
-          navigate('/Home')
+          navigate('/EditJoinRequest')
         },1000)
       }
 }
 catch(err){
-  console.log("error occur",err.response.data.message)
-  setErrMsg(err.response.data.message)
+  console.log("error occur",err.message)
+  setErrMsg(err.message)
 }
 
 

@@ -10,11 +10,10 @@ import {
   gpa,
   egyptUniversities,
 } from "../../../Data";
-import { FallingLines } from 'react-loader-spinner';
-import { event } from 'jquery';
+
 export default function New() {
   const[token,setToken] = useState(null)
-  useEffect(function(){
+   useEffect(function(){
   if(localStorage.getItem("tkn")!==null){
      setToken(localStorage.getItem("tkn"))
   }
@@ -38,7 +37,7 @@ let user={
     
     setisLouding(true)
     console.log("sending to backend")
-
+    console.log(token)
 
     try {
       const { data } = await axios.put(
@@ -52,7 +51,7 @@ let user={
             gender: value.gender
           },
           headers: {
-            Authorization: token // Include authentication token directly
+            token: token 
           }
         }
       );
