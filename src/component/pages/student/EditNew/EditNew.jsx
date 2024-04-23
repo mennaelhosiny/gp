@@ -51,7 +51,7 @@ let user={
             gender: value.gender
           },
           headers: {
-            token: token 
+            Authorization: `Bearer ${token}`
           }
         }
       );
